@@ -6,6 +6,7 @@ sinatraをSysVinitやらSystemdやらUpstartで動かすsample
 ## Dependencies  
   
 vagrant で ubutnu14.04 が動くようにしておいて下さい。  
+systemd は動きません。
 
 ## Usage  
   
@@ -18,12 +19,12 @@ vagrant で ubutnu14.04 が動くようにしておいて下さい。
 3. sinatra の 起動  
 `vagrant ssh`  
 *SysVinit*  
-`sudo /etc/ini.d/sinatra start|stop|restart|status`  
+`sudo /etc/init.d/sinatra start|stop|restart|status`  
 *Upstart*  
 `sudo initctl start|stop|restart|status sinatra`  
 *Systemd*  
 `sudo systemctl start|stop|restart|status sinatra.service`  
-＊ubuntu14.0.4では systemd は動かない模様？  
+＊ubuntu14.0.4では systemd は動かない？  
   
   
 ## Structure  
@@ -31,6 +32,6 @@ vagrant で ubutnu14.04 が動くようにしておいて下さい。
 * sinatra.yml  
 * sinatra.sysvinit  
 * sinatra.conf.upstart  
-* sinatra.service.systemd(？)  
+* sinatra.service.systemd  
 * hello.rb  
 * Vagrantfile  
