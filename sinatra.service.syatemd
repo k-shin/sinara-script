@@ -1,0 +1,10 @@
+[Unit]
+Description=sinatra
+
+[Servie]
+Type=simple
+ExecStart=/usr/bin/ruby hello.rb -e production
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
