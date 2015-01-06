@@ -1,34 +1,37 @@
 sinatra-script
 ==============
-
-sinatraをSysVinitやらSystemdやらUpstartで動かすもの  
-
+  
+sinatraをSysVinitやらSystemdやらUpstartで動かすsample    
+  
 ## Dependencies  
-
-vagrant上でubutnu14.04を動くようにしておいて下さい。  
-
-vagrant ssh で vagrant に login し  
-`$ sudo apt-get install ruby`  
-`$ sudo gem install sinatra`  
-を実行し ruby と sinatra を installしておいて下さい。  
+  
+vagrant で ubutnu14.04 が動くようにしておいて下さい。  
+systemd は動きません。
 
 ## Usage  
-
-sinatra.sysvinit を /etc/init.d/sinatra に rename して配置  
-`chmod +x /etc/init.d/sinatra` で実行権限を与える  
-`sudo /etc/ini.d/sinatra start|stop|restart|status`  
   
-sinatra.conf.upstart を /etc/init/sinatra.conf に rename して配置  
+1. repository の取得  
+`git clone git@github.com:k-shin/sinatra-script.git`  
+  
+2. vagrant の起動   
+`cd sinatra-script && vagrant up`  
+  
+3. sinatra の 起動  
+`vagrant ssh`  
+*SysVinit*  
+`sudo /etc/init.d/sinatra start|stop|restart|status`  
+*Upstart*  
 `sudo initctl start|stop|restart|status sinatra`  
-  
-sinatra.service.systemd を /etc/systemd/system/sinatra.service に rename して配置  
+*Systemd*  
 `sudo systemctl start|stop|restart|status sinatra.service`  
-＊ubuntu14.0.4で systemd を動かす場合は package の install と grub の書き換えが必要（？）  
+＊ubuntu14.0.4では systemd は動かない？  
   
   
 ## Structure  
   
+* sinatra.yml  
 * sinatra.sysvinit  
 * sinatra.conf.upstart  
-* sinatra.service.systemd（判らん）  
-  
+* sinatra.service.systemd  
+* hello.rb  
+* Vagrantfile  
