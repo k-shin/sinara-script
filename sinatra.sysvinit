@@ -8,7 +8,7 @@ NAME="sinatra"
 PIDFILE="/var/run/sinatra/${NAME}.pid"
 LOG="/var/log/sinatra/${NAME}.log"
 APPHOME="/etc"
-CMD="ruby /etc/hello.rb -e production"
+CMD="/usr/bin/ruby /etc/hello.rb -e production"
 
 [ -d "/var/run/$NAME" ] || mkdir /var/run/$NAME
 [ -d "/var/log/$NAME" ] || mkdir /var/log/$NAME

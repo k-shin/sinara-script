@@ -17,5 +17,5 @@ pre-start script
 end script
 
 chdir /etc
-exec ruby /etc/hello.rb -e production > $LOG 2>&1
+exec /usr/bin/rub /etc/hello.rb -e production > $LOG 2>&1
 

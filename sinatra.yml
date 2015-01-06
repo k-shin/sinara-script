@@ -1,0 +1,19 @@
+---
+- hosts: example
+  sudo: yes
+  tasks:
+    - name: gem install sinatra
+      gem: name=sinatra executable=/usr/bin/gem user_install=False
+
+    - name: copy sinatra main
+      copy: src=hello.rb dest=/etc/hello.rb owner=vagrant group=vagrant mode=0744
+
+    - name: copy sinatra sysvinit
+      copy: src=sinatra.sysvinit dest=/etc/init.d/sinatra owner=root group=root mode=0755
+
+    - name: copy sinatra upstart
+      copy: src=sinatra.conf.upstart dest=/etc/init/sinatra.conf owner=root group=root mode=0644
+
+    - name: copy sinatra systemd
+      copy: src=sinatra.service.systemd dest=/etc/systemd/system/sinatra.service owner=root group=root mode=0644
+
