@@ -1,0 +1,83 @@
+#!/bin/bash
+#
+# chkconfig:   - 85 15 
+# description: sinatra
+#
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+NAME="sinatra"
+PIDFILE="/var/run/sinatra/${NAME}.pid"
+LOG="/var/log/sinatra/${NAME}.log"
+APPHOME="/etc"
+CMD="ruby /etc/hello.rb -e production"
+
+[ -d "/var/run/$NAME" ] || mkdir /var/run/$NAME
+[ -d "/var/log/$NAME" ] || mkdir /var/log/$NAME
+
+sinatra_start() {
+  if [ -e $PIDFILE ]; then
+    pid="$(cat ${PIDFILE})"
+    echo "[ERROR] ${NAME} is already running (pid $pid)"
+    exit 1
+  fi
+  cd ${APPHOME}
+  echo -n "Starting ${NAME} ... "
+  nohup ${CMD} > ${LOG} 2>&1 &
+  pid=$!
+  if [ $? = 0 ]; then
+    echo "[SUCCESS]"
+    echo $pid > "${PIDFILE}"
+  else 
+    echo "[FAILED]"
+    exit 1
+  fi
+}
+
+sinatra_stop() {
+  if [ -e ${PIDFILE} ]; then
+    pid="$(cat ${PIDFILE})"
+  else
+    echo "[ERROR] ${NAME} is not running." 
+    exit 1
+  fi
+
+  echo -n "Stopping ${NAME} ... "
+  kill ${pid}
+  if [ $? = 0 ]; then
+    echo "[SUCCESS]"
+    rm ${PIDFILE}
+  else 
+    echo "[FAILED]"
+    exit 1
+  fi
+}
+
+sinatra_status() {
+  if [ -e ${PIDFILE} ]; then
+    pid="$(cat ${PIDFILE})"
+    echo "${NAME} is running (pid $pid)"
+  else
+    echo "${NAME} is not running"
+  fi
+}
+
+case "$1" in
+  start)
+  sinatra_start
+  ;;
+  stop)
+  sinatra_stop
+  ;;
+  restart)
+  sinatra_stop
+  sinatra_start
+  ;;
+  status)
+  sinatra_status
+  ;;
+  *)
+  echo $"Usage: $0 {start|stop|restart|status}" >&2
+  exit 1
+  ;;
+esac
+
