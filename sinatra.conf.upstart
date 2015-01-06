@@ -1,0 +1,22 @@
+description "sinatra"
+
+start on runlevel [2345]
+stop  on runlevel [!2345]
+respawn
+
+setuid "root"
+setgid "root"
+
+env NAME="sinatra"
+env LOG="/var/log/sinatra/sinatra.log"
+
+console log
+
+pre-start script
+  [ -d "/var/log/${NAME}" ] || mkdir /var/log/$NAME
+end script
+
+chdir /etc
+exec ruby /etc/hello.rb -e production > $LOG 2>&1
+
+
