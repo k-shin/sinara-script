@@ -4,7 +4,6 @@
 # description: sinatra
 #
 
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 NAME="sinatra"
 PIDFILE="/var/run/sinatra/${NAME}.pid"
 LOG="/var/log/sinatra/${NAME}.log"
